@@ -8,7 +8,7 @@
         <view class="place-icon">
           <image class="icon" src="/static/login/email.svg" mode="scaleToFill" />
         </view>
-        <input class="account-input" placeholder="邮箱账号" type="email" />
+        <input class="account-input" placeholder="邮箱账号/昵称" type="email" />
       </view>
       <view class="account-inputs">
         <view class="place-icon">
@@ -27,10 +27,10 @@
           <image class="social-icon" src="/static/login/weixin.svg" mode="scaleToFill"></image>
         </view>
         <view class="icon-wrapper">
-          <image class="social-icon" src="/static/login/weixin.svg" mode="scaleToFill"></image>
+          <image class="social-icon" src="/static/login/qq.svg" mode="scaleToFill"></image>
         </view>
         <view class="icon-wrapper">
-          <image class="social-icon" src="/static/login/weixin.svg" mode="scaleToFill"></image>
+          <image class="social-icon" src="/static/login/twitter.svg" mode="scaleToFill"></image>
         </view>
       </view>
     </view>
