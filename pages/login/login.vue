@@ -3,7 +3,7 @@
     <view class="login-banner">
       Live
     </view>
-    <form class="forms">
+    <form class="login-forms">
       <view class="account-inputs">
         <view class="place-icon">
           <image class="icon" src="/static/login/email.svg" mode="scaleToFill" />
@@ -20,6 +20,15 @@
         登录
       </view>
     </form>
+	<view class="rtag">
+	  <view class="text-wrapped">
+		  <text class="rtext" @click="redirectToRegister">注册</text>
+	  </view>
+	  <view class="text-wrapped">
+		  <text class="rtext" @click="redirectToSendCode">邮箱验证码登录</text>
+		  <image class="icon-wrapper-small" src="/static/login/right.svg"></image>
+	  </view>	  
+	</view>
     <view class="external">
       <text class="external-text">跳转外部登录</text>
       <view class="external-icons">
@@ -38,91 +47,40 @@
 </template>
 
 <script setup>
+	const redirectToRegister = ()=>{
+		uni.navigateTo({
+			url: "/pages/register/register"
+		})
+	}
+	const redirectToSendCode=()=>{
+		uni.navigateTo({
+			url: "/pages/login_by_send_code/login_by_send_code"
+		})
+	}
 </script>
 
 <style>
-.page-login {
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  /***
-  第一行：固定高度 30vh（视口高度的30%）
-  第二行：auto（由内容决定高度）
-  第三行：1fr → 占用剩余的全部空间
-  ***/
-  grid-template-rows: 30vh auto 1fr;
-  background-color: #ffffff;
+.rtag{
+	width: 100vw;
+	height: 50px;
+	grid-row: 3;
+	display: flex;
+	justify-content: space-around;
+	margin-top: 10px;
 }
-
-.login-banner {
-  grid-row: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #FF5853;
-  color: white;
-  font-size: 2.5rem;
-  font-weight: bold;
+.text-wrapped{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-
-.forms {
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 10vw;
-  margin-top: 20px;
-}
-
-.account-inputs {
-  display: flex;
-  width: 100%;
-  height: 50px;
-  border-radius: 25px;
-  border: 1px solid #e0e0e0;
-  margin-bottom: 20px;
-  align-items: center;
-  background-color: #f9f9f9;
-}
-
-.place-icon {
-  width: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-}
-
-.account-input {
-  flex: 1;
-  height: 100%;
-  padding: 0 10px;
-  border: none;
-  background: transparent;
-  outline: none;
-}
-
-.btn-login {
-  width: 100%;
-  height: 50px;
-  background-color: #FF5853;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-top: 10px;
-  border: none;
+.icon-wrapper-small{
+	width: 20px;
+	height: 20px;
+	margin-left: 5px;
 }
 
 .external {
-  grid-row: 3;
+  grid-row: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -134,6 +92,10 @@
   color: #999;
   margin-bottom: 20px;
   font-size: 0.9rem;
+}
+.rtext{
+	color: #4D4D4D;
+	font-size: 0.9rem;
 }
 
 .external-icons {
