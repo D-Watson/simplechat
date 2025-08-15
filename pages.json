@@ -1,0 +1,80 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "Live"
+			}
+		},
+		{
+			"path" : "pages/login/login",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/message/message",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/mine/mine",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/recommend/recommend",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {},
+	"tabBar": { 
+			"color": "#8a8a8a", // 导航栏字体颜色
+			"selectedColor": "#d4237a", // 选中后字体的颜色
+			"borderStyle": "black", // 底部的border颜色，只能是“black”或者“white”
+			"backgroundColor": "#ffffff", // 底部背景颜色
+			"list": [{
+					"pagePath": "pages/index/index", // 页面路径
+					"text": "首页", // 底部导航文字,
+					"iconPath": "static/tarbar/index.png", // 没选中前的图标路径
+					"selectedIconPath": "static/tarbar/index_s.png" // 选中后的图标路径
+				},
+				{
+						"pagePath": "pages/recommend/recommend", // 页面路径
+						"text": "我推", // 底部导航文字,
+						"iconPath": "static/tarbar/wotui.png", // 没选中前的图标路径
+						"selectedIconPath": "static/tarbar/wotui_s.png" // 选中后的图标路径
+					},
+				{
+						"pagePath": "pages/message/message", // 页面路径
+						"text": "消息", // 底部导航文字,
+						"iconPath": "static/tarbar/index.png", // 没选中前的图标路径
+						"selectedIconPath": "static/tarbar/index_s.png" // 选中后的图标路径
+					},
+					{
+							"pagePath": "pages/mine/mine", // 页面路径
+							"text": "我的", // 底部导航文字,
+							"iconPath": "static/tarbar/index.png", // 没选中前的图标路径
+							"selectedIconPath": "static/tarbar/index_s.png" // 选中后的图标路径
+						}
+			]
+		}
+}
