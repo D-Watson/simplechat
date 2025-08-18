@@ -14,7 +14,7 @@
 	      <view class="place-icon">
 	        <image class="icon" src="/static/login/password.svg" mode="scaleToFill" />
 	      </view>
-	      <input class="account-input" placeholder="验证码" type="password" />
+	      <input class="account-input" v-model="data.code" placeholder="验证码" />
 			<view v-if="sentCode"> {{sentTime}} </view>
 			<view v-else class="send-code" @click="sendCode">发送</view>
 	    </view>
@@ -57,7 +57,24 @@ const login=async()=>{
 		passwdVerify: false,
 		code: data.code
 	})
-	console.log(res)
+	var resp = res.data;
+	console.log(resp)
+	if(resp.errCode === 5005){
+		console.log('验证码错误')
+	}
+	if(resp.errCode === 200){
+		console.log('success')
+		localStorage.setItem('userId', resp.data.userId);
+		localStorage.setItem('token', resp.data.token);
+		console.log(localStorage.getItem('userId'))
+		clearInterval(timer.value)
+		timer.value = null
+		sentTime.value = 60
+		sentCode.value = false
+		uni.switchTab({
+			url: '/pages/index/index'
+		})
+	}
 }
 
 const countDown = () => {

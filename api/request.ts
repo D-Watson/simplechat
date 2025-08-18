@@ -10,3 +10,16 @@ export interface LoginReq{
 	passwdVerify: boolean
 	code: string
 }
+
+export interface UserInfo{
+	userId: string
+	userName: string
+	deviceId: string
+	portrait: string
+}
+
+export interface MessageBody{
+	userInfo: UserInfo
+	content: string
+	timestamp: string
+}
