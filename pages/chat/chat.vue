@@ -15,7 +15,6 @@
 	  
     <view class="bottom-area">
       <textarea 
-	  @input="focus"
 	  class="text-input" 
 	  v-model="content"
 	   auto-height="true" cursor-spacing="15" :adjust-position="true"></textarea>
@@ -30,22 +29,18 @@
 
 <script setup>
 import { reactive, ref,onMounted, onUnmounted } from 'vue';
-import {MessageBody, UserInfo} from '../../api/request'
+// import {MessageBody, UserInfo} from '../../api/request'
 const content = ref('');
+const chatWithUser = ref('miao~')
 const messageList = reactive([
 	{"portrait": "", "userName": "zzz"}
 ])
 // 初始化导航栏
 const initNavBar = () => {
   uni.setNavigationBarTitle({
-    title: '与xxx的聊天'
+    title: `与${chatWithUser.value}的聊天`
   });
 };
-// 处理输入事件
-initNavBar();
-const focus=(e)=>{
-	console.log(content.value)
-}
 
 const socket = ref(null);
 const messages = ref([]);
@@ -120,6 +115,7 @@ const formatTime = (timestamp) => {
 
 onMounted(() => {
   connectWebSocket();
+  initNavBar();
 });
 
 onUnmounted(() => {
