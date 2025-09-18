@@ -25,3 +25,17 @@ export const loginByCode=async(data: type.LoginReq)=>{
 	  })
 	  return response
 } 
+
+//拉取聊天列表
+export const getChatList=async(data: type.ChatListItem)=>{
+	const url = 'http://localhost:50011/user/chat/list'
+	const response = axios({
+	    url,
+	    method: 'POST',
+	    data: data,
+	    headers: {
+	      'Content-Type': 'application/json'
+	    },
+	  })
+	  return response
+} 

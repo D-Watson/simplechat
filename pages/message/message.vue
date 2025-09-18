@@ -1,93 +1,44 @@
 <template>
-  
+
+<view class="user-chat-list">
+	<UserInfoEnhanced
+	    avatarUrl="https://gitee.com/Anxiaozhuang/pic-storage/raw/master/%E5%9C%A3%E6%9D%AF%E4%B8%83%E9%80%86%E4%BD%8D.webp"
+	    name="Tom"
+	    description="全栈工程师"
+	    size="medium"
+	    layout="horizontal"
+	    show-badge
+	    badge-content="5"
+	    status="online"
+	/>
+	<UserInfoEnhanced
+	    avatarUrl="https://gitee.com/Anxiaozhuang/pic-storage/raw/master/%E5%9C%A3%E6%9D%AF%E4%B8%83%E9%80%86%E4%BD%8D.webp"
+	    name="Tom"
+	    description="全栈工程师"
+	    size="medium"
+	    layout="horizontal"
+	    show-badge
+	    badge-content="5"
+	    status="online"
+	/>
+</view>
+
 </template>
-
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-
-const socket = ref(null);
-const messages = ref([]);
-const inputMessage = ref('');
-const username = ref('用户' + Math.floor(Math.random() * 1000));
-const scrollTop = ref(0);
-
-// 连接到WebSocket服务器
-const connectWebSocket = () => {
-  socket.value = uni.connectSocket({
-    url: 'ws://localhost:8080/ws',
-    complete: () => {}
-  });
-  
-  socket.value.onOpen(() => {
-    console.log('WebSocket连接成功');
-    sendSystemMessage(`${username.value} 进入聊天室`);
-  });
-  
-  socket.value.onMessage((res) => {
-    const msg = JSON.parse(res.data);
-    messages.value.push(msg);
-    scrollToBottom();
-  });
-  
-  socket.value.onClose(() => {
-    console.log('WebSocket连接关闭');
-  });
-};
-
-// 发送系统消息
-const sendSystemMessage = (content) => {
-  const msg = {
-    username: '系统',
-    content,
-    timestamp: Date.now()
-  };
-  messages.value.push(msg);
-  scrollToBottom();
-};
-
-// 发送普通消息
-const sendMessage = () => {
-  if (!inputMessage.value.trim()) return;
-  
-  const msg = {
-    username: username.value,
-    content: inputMessage.value,
-    timestamp: Date.now()
-  };
-  
-  socket.value.send({
-    data: JSON.stringify(msg),
-    success: () => {
-      inputMessage.value = '';
-    }
-  });
-};
-
-// 滚动到底部
-const scrollToBottom = () => {
-  setTimeout(() => {
-    scrollTop.value = Math.random() * 1000000; // 随机值触发滚动
-  }, 100);
-};
-
-// 格式化时间
-const formatTime = (timestamp) => {
-  const date = new Date(timestamp);
-  return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-};
-
-onMounted(() => {
-  connectWebSocket();
-});
-
-onUnmounted(() => {
-  if (socket.value) {
-    socket.value.close();
-  }
-});
+import {reactive } from 'vue'
+import UserInfoEnhanced from '@/component/user_info.vue'
+const chatList = reactive([])
+const getChatList=()=>{
+	
+}
 </script>
-
-<style>
-
-
+<style scoped>
+.user-chat-list{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	
+}
 </style>

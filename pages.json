@@ -18,7 +18,7 @@
 			"path" : "pages/message/message",
 			"style" : 
 			{
-				"navigationBarTitleText" : "",
+				"navigationBarTitleText" : "消息",
 				"enablePullDownRefresh" : false
 			}
 		},
@@ -98,7 +98,7 @@
 							"text": "我的", // 底部导航文字,
 							"iconPath": "static/tarbar/index.png", // 没选中前的图标路径
 							"selectedIconPath": "static/tarbar/index_s.png" // 选中后的图标路径
-						}
+					}
 			]
 		}
 }
