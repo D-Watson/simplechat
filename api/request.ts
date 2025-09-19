@@ -39,8 +39,8 @@ export interface PhotoListCard{
 	photoStyles: PhotoStyle[]
 	
 	// 接单时间范围
-	start: number
-	end: number
+	start: string
+	end: string
 	// 接单地址范围
 	orderScope: AddressInfo[]
 }

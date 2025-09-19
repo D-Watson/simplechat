@@ -26,6 +26,15 @@
 	  grid-template-rows: 30vh auto auto 1fr;
 	  background-color: #ffffff;
 	}
+	@font-face {
+	  font-family: 'Cute';
+	  src: url('/static/font/LXGWWenKai-Regular.ttf') format('truetype');
+	  font-display: swap; /* 先显示系统字体，再切换 */
+	}
+	/* 全局使用 */
+	page, * {
+	  font-family: 'Cute';
+	}
 	
 	.login-banner {
 	  grid-row: 1;
@@ -66,7 +75,14 @@
 	.icon {
 	  width: 24px;
 	  height: 24px;
-	  
+	}
+	.icon-small{
+		width: 12px;
+		height: 12px;
+	}
+	.icon-wrapper{
+		display: flex;
+		align-items: center;
 	}
 	
 	.account-input {
@@ -91,5 +107,59 @@
 	  font-weight: bold;
 	  margin-top: 10px;
 	  border: none;
+	}
+	.btn-concern{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color:aliceblue;
+		background-color: #FF5853;
+		width: 15vw;
+		height: 7vw;
+		border-radius: 10px;
+		font-size: 0.7rem;
+		margin-right: 10px;
+	}
+		
+	.btn-concerned{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color:#4D4D4D;
+		background-color: #979797;
+		width: 15vw;
+		height: 7vw;
+		border-radius: 10px;
+		font-size: 0.7rem;
+		margin-right: 10px;
+	}	
+	.select-items{
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 998;
+		display: flex;
+		background-color: white;
+		width: 100vw;
+		flex-direction: column;
+		overflow: hidden;
+		align-items: center;
+	}
+	.item{
+		display: flex;
+		align-items: center;
+		height: 50px;
+		width: 100vw;
+	}
+	.item-text{
+		min-width: 50px;
+		height: 20px;
+		align-items: center;
+		justify-content: center;
+		color: #4D4D4D;
+		font-size: 0.8rem;
+		font-weight: 800;
+		margin-left: 10px;
 	}
 </style>

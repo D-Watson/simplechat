@@ -14,7 +14,12 @@
 		</view>
 		<view class="info-content">
 		  <view class="name" :class="size">{{ name }}</view>
-		  <view v-if="description" class="description">{{ description }}</view>
+		  <view style="display: flex; justify-content: center;align-items: center;">
+			  <image class="img" :src="currentIcon" mode="aspectFit"></image>
+			  <view v-if="description" class="description">{{ description }}</view>
+			  <view v-if="ipPosition" class="description">{{ ipPosition }}</view>
+		  </view>
+		 
 		</view>
 	</view>
 	<view class="tags">
@@ -28,6 +33,8 @@
 
 <script setup>
 import { defineProps, computed, ref } from 'vue'
+import girl from '@/static/girl.png'
+import boy from '@/static/boy.png'
 
 const props = defineProps({
   tags:{
@@ -38,6 +45,11 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  // ip归属地
+  ipPosition:{
+	  type: String,
+	  default: ''
+  },
   name: {
     type: String,
     required: true
@@ -45,6 +57,11 @@ const props = defineProps({
   description: {
     type: String,
     default: ''
+  },
+  // 性别
+  gender:{
+	  type: Number,
+	  default: 0 //0=女，1=男
   },
   size: {
     type: String,
@@ -76,7 +93,7 @@ const props = defineProps({
 })
 
 const avatarError = ref(false)
-
+const currentIcon = computed(() => props.gender.value === 0 ? boy : girl)
 const effectiveAvatarUrl = computed(() => {
   if (avatarError.value || !props.avatarUrl) {
     return props.defaultAvatar
@@ -93,7 +110,7 @@ const handleImageError = () => {
 .user-info-enhanced {
   display: inline-flex;
   gap: 12px;
-  justify-content: space-between;
+  align-items: center;
 }
 
 .user-info{
@@ -180,13 +197,20 @@ const handleImageError = () => {
 }
 
 .description {
-  font-size: 12px;
+  font-size: 0.7rem;
   color: #6b7280;
-  margin-top: 2px;
+  margin-top: 5rpx;
+  margin-left: 10rpx;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 150rpx;
+}
+.img{
+	margin-top: 5rpx;
+	overflow: hidden;
+	width: 30rpx;
+	height: 30rpx;
 }
 
 /* 徽章样式 */
@@ -249,21 +273,19 @@ const handleImageError = () => {
 .tags{
 	display: flex;
 	height: 100%;
-	margin-top: 10px;
 }
 .tag{
-	min-width:50px;
-	height: 20px;
+	min-width:40px;
+	height: 15px;
 	font-size: 0.6rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	margin-right: 10px;
-/* 	background: linear-gradient(90deg,#FFB3D5 0%, #F68084 100%); */
-	background-color: #F68084;
-	color: white;
-	border-radius: 10px;
+	background-color: #d9d9d9;
+	color: #979797;
 	padding:0 5px;
+	border-radius: 10px;
 }
 
 </style>

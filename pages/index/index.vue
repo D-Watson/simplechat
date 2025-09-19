@@ -105,7 +105,6 @@ async function onRefresh(idx){
   align-items: center;
   border-bottom: 1rpx solid #eee;
   z-index: 998;
-  
 }
 .tab-item{
   flex:1;
@@ -133,7 +132,7 @@ async function onRefresh(idx){
 /* 内容区 */
 .content-swiper{
   height: 100vh;          // 整屏高
-  padding-top: 88rpx;     // 把固定栏位置让出来
+  padding-top: 100rpx;     // 把固定栏位置让出来
   box-sizing: border-box;
 }
 .scroll-box{
