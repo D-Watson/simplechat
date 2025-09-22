@@ -143,7 +143,6 @@
 		background-color: white;
 		width: 100vw;
 		flex-direction: column;
-		overflow: hidden;
 		align-items: center;
 	}
 	.item{

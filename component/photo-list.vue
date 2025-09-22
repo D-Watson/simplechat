@@ -9,27 +9,40 @@
 					<image class="icon-small" :src="datePickerShow?up:down" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="item-text">
+			<view class="item-text" @click="showTraitPicker">
 				<view class="icon-wrapper">
-					<text v-if="datePickerShow === true" style="margin-right: 3px; color: #FE1934;">风格</text>
+					<text v-if="traitPickerShow === true" style="margin-right: 3px; color: #FE1934;">风格</text>
 					<text v-else style="margin-right: 3px;">风格</text>
-					<image class="icon-small" :src="datePickerShow?up:down" mode="aspectFit"></image>
+					<image class="icon-small" :src="traitPickerShow?up:down" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="item-text">
+			<view class="item-text" @click="showMorePicker">
 				<view class="icon-wrapper">
-					<text v-if="datePickerShow === true" style="margin-right: 3px; color: #FE1934;">更多</text>
+					<text v-if="morePickerShow === true" style="margin-right: 3px; color: #FE1934;">更多</text>
 					<text v-else style="margin-right: 3px;">更多</text>
-					<image class="icon-small" :src="datePickerShow?up:down" mode="aspectFit"></image>
+					<image class="icon-small" :src="morePickerShow?up:down" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="item-text">推荐排序</view>
 		</view>
-		<uni-calendar v-show="datePickerShow === true" class="uni-calendar--hook my-extra" clear-date=false insert=true lunar=true :startDate="timePicker.startDate"
-		 :endDate="timePicker.endDate" range=true @confirm="timePickConfirm" @close="close"/>
+		
+		<uni-calendar v-show="datePickerShow === true" class="uni-calendar--hook my-extra" :clear-date="timePicker.clear" insert=true lunar=true :startDate="timePicker.startDate"
+		 :endDate="timePicker.endDate" :key="timePicker.calendarKey" range=true @confirm="timePickConfirm" @close="close" @change="change"/>
 		 <view v-show="datePickerShow" class="btn-bar">
-			 <view class="btn-cancel">取消</view>
-			 <view class="btn-confirm">确认</view>
+			 <view class="btn-cancel" @click="cancelTimePicker">重置</view>
+			 <view class="btn-confirm" @click="timePickConfirm">确认</view>
+		 </view>
+		 <view v-show="traitPickerShow === true" class="trait-picker-wrapper">
+			 <view class="trait-picker-grid">
+				 <view v-for="(item, i) in traitList" :key="i" @click="appendCell(item)">
+					 <view class="picked" v-if="activeCell(item)">{{item}}</view>
+					 <view class="unpicked" v-else> {{item}} </view>
+				 </view>
+			 </view>
+			<view class="btn-bar">
+				 <view class="btn-cancel" @click="canceltraitPicker">重置</view>
+				 <view class="btn-confirm" @click="traitPickConfirm">确认</view>
+			</view>
 		 </view>
 	</view>
   <view class="box">
@@ -118,28 +131,143 @@ import up from "@/static/icons/up.png";
 
 // 字段定义
 const cardList = reactive<type.PhotoListCard[]>([]);
+const activeIndex = ref(0)
+
+// 风格标签
+const traitList = reactive([
+	"全部风格",
+	"日系",
+	"古风",
+	"赛博朋克",
+	"洛丽塔",
+	"二次元"
+])
+
+// 时间选择器
 const timePicker = reactive({
 	"selected": [],
 	"endDate": '',
 	"startDate":'',
-	"range": true
+	"range": {},
+	"clear": false,
+	"calendarKey": Date.now()
 })
 const datePickerShow = ref(false)
 
+// 风格选择
+const traitPickerShow = ref(false)
+const traitPicker = reactive({
+	"pickedList" : [traitList[0]] as string[]
+})
+
+// 更多
+const morePickerShow = ref(false)
+const morePicker = reactive(({}))
+
+
 //内部方法
+
 const showTimePicker = ()=>{
 	datePickerShow.value = !datePickerShow.value
+	if(datePickerShow.value === true){
+		traitPickerShow.value = false;
+		morePickerShow.value = false;
+	}
 }
-const timePickConfirm = (e)=>{
-	console.log(e)
+const showTraitPicker=()=>{
+	traitPickerShow.value = !traitPickerShow.value
+	if(traitPickerShow.value === true){
+		datePickerShow.value = false;
+		morePickerShow.value = false;
+	}
+}
+const showMorePicker=()=>{
+	morePickerShow.value = !morePickerShow.value
+	if(morePickerShow.value === true){
+		datePickerShow.value = false;
+		traitPickerShow.value = false;
+	}
 }
 
-const close=(e)=>{
-	console.log(e)
+
+
+const activeCell = (item: string) => traitPicker.pickedList.includes(item);
+
+const change = (e)=>{
+	console.log('change-----')
+	timePicker.range = e
+	timePicker.startDate = e.range.before;
+	timePicker.endDate = e.range.endDate;
+	console.log(timePicker)
 }
 
+const timePickConfirm = ()=>{
+	console.log(timePicker.startDate)
+	console.log(timePicker.endDate)
+	close()
+	//todo:请求筛选接口刷新页面
+}
+
+const close=()=>{
+	datePickerShow.value = false
+}
+
+const closeTraitPicker=()=>{
+	traitPickerShow.value = false;
+}
+
+
+const cancelTimePicker=()=>{
+	console.log('cancel')
+	// 请求接口刷新页面
+	 timePicker.startDate = '';
+	timePicker.endDate = '';
+  // 强制重新渲染日历组件
+	timePicker.calendarKey = Date.now();
+	timePicker.clear = true;
+	setTimeout(()=>{
+		close();
+	},50)
+}
+
+const appendCell=(item:string)=>{
+	var all = traitList[0]
+	var allPicked =  traitPicker.pickedList.indexOf(all)
+	if(item != all){
+		if(allPicked>=0 ){
+			traitPicker.pickedList.splice(allPicked, 1)
+		}
+		var idx = traitPicker.pickedList.indexOf(item)
+		if(idx >=0){
+			traitPicker.pickedList.splice(idx, 1)
+		}else{
+			traitPicker.pickedList.push(item)
+		}
+		console.log(traitPicker.pickedList.flat())
+		return;
+	}
+	traitPicker.pickedList = [item]
+	return
+}
 
 // 请求接口
+
+const canceltraitPicker = ()=>{
+	traitPicker.pickedList = [] as string[]
+	traitPicker.pickedList.push(traitList[0])
+	//todo:刷新重新请求
+	setTimeout(()=>{
+		closeTraitPicker()
+	}, 100)
+	
+}
+
+const traitPickConfirm=()=>{
+	//todo：请求接口刷新
+	setTimeout(()=>{
+		closeTraitPicker()
+	}, 100)
+}
 
 const getCardList = (page: Number, pageSize: Number)=>{
 	// 请求服务端获取卡片列表
@@ -299,12 +427,13 @@ getCardList(0,10);
 .btn{
 	&-bar{
 		background-color: white;
-		width: 100vw;
-		padding: 20px;
+		width: 100%;
+		padding: 20px 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		z-index: 999;
+		border-radius: 0 0 12px 12px;
 	}
 	&-confirm{
 		align-items: center;
@@ -334,6 +463,40 @@ getCardList(0,10);
 		color: #979797;
 		border: 1px solid #f9f9f9;
 	}
+}
+.trait-picker-wrapper{
+	width: 98vw;
+	background: #fff;
+	border-radius: 0 0 12px 12px;
+	box-shadow: 0 20px 50px rgba(0,0,0,.5);
+}
+.trait-picker-grid{
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+	padding: 12px 0;  /* 上下留白，左右已由外层 margin 控制 */
+	justify-items: center;
+	align-items: center;
+	font-size: 0.8rem;
+}
+.unpicked {
+  height: 30px;
+  width: 18vw;
+  background: #979797;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.picked{
+	height: 30px;
+	width: 18vw;
+	background: #FF5853;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 </style>
