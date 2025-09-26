@@ -47,20 +47,25 @@
 	</view>
 	  <view class="box">
 		 <view v-for="(item, i) in cardList" :key="i" class="card">
+			 <view class="card-top">
+				 <view class="card-title">【摄影】title.....</view>
+				 <view class="btn-concern card-subscribe">预约</view>
+			 </view>
+			 
 			 <view style="display: flex; justify-content: space-between;align-items: center;">
 				 <UserInfoEnchanced
 				   :avatarUrl="item.userInfo.portrait"
 				   :name="item.userInfo.userName"
 				   description="2天前"
 				   ipPosition="上海"
-				   size="medium"
+				   size="small"
 				   gender=0
 				   layout="horizontal"
 				   :tags="item.userInfo.tags"
 				 />
-				 <view class="btn-concern">
+	<!-- 			 <view class="btn-concern">
 					+ 关注
-				 </view>
+				 </view> -->
 			 </view>
 			
 			 <view class="card-content">
@@ -326,6 +331,23 @@ getCardList(0,10);
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  &-top{
+	 width: 100vw;
+	 padding: 20rpx 5rpx;
+	 display: flex;
+	 font-weight: 600;
+	 font-size: 1rem;
+	 align-items: center;
+	 justify-content: space-between;
+  }
+  &-title{
+	  width: 50vw;
+	  font-family: "微软雅黑";
+  }
+  &-subscribe{
+	  margin-right: 20rpx;
+	  padding: 5rpx;
+  }
   &-content{
 	  display: flex;
 	  margin-top: 10px;
