@@ -3,7 +3,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "Live"
+				"navigationBarTitleText": "",
+				 "navigationStyle": "custom"
 			}
 		},
 		{
@@ -19,7 +20,7 @@
 			"style" : 
 			{
 				"navigationBarTitleText" : "消息",
-				"enablePullDownRefresh" : false
+				"enablePullDownRefresh" : true
 			}
 		},
 		{
@@ -61,6 +62,22 @@
 				"navigationBarTitleText" : "",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/publish-photographer/publish-photographer",
+			"style" : 
+			{
+				"navigationBarTitleText" : "发布约拍"
+				 // "navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/user-homepage/user-homepage",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
@@ -75,6 +92,12 @@
 			"selectedColor": "#d4237a", // 选中后字体的颜色
 			"borderStyle": "black", // 底部的border颜色，只能是“black”或者“white”
 			"backgroundColor": "#ffffff", // 底部背景颜色
+			"midButton": {
+				"iconPath": "/static/icons/plus.png",
+				"width": "50px",
+				"height": "40px",
+				"iconWidth": "30px"
+			},
 			"list": [{
 					"pagePath": "pages/index/index", // 页面路径
 					"text": "首页", // 底部导航文字,
@@ -87,6 +110,7 @@
 						"iconPath": "static/tarbar/wotui.png", // 没选中前的图标路径
 						"selectedIconPath": "static/tarbar/wotui_s.png" // 选中后的图标路径
 					},
+					
 				{
 						"pagePath": "pages/message/message", // 页面路径
 						"text": "消息", // 底部导航文字,

@@ -2,6 +2,22 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			uni.onTabBarMidButtonTap(() => {
+			  uni.showActionSheet({
+			    itemList: ['发布约拍', '从相册选择'],
+			    success: (res) => {
+			      if (res.tapIndex === 0) {
+			        uni.navigateTo({
+			        	url: '/pages/publish-photographer/publish-photographer'
+			        })
+			      } else {
+			        uni.chooseImage({ sourceType: ['album'], count: 9 });
+			      }
+			      //  官方 ActionSheet 会在 success 后自动关闭
+			    },
+			    fail: () => { /* 用户取消也会自动关闭 */ }
+			  });
+			});
 		},
 		onShow: function() {
 			console.log('App Show')

@@ -2,6 +2,7 @@
   <!-- 1. 固定导航栏 -->
   <!-- 当 active === i 为真时，给这一行 DOM 加上 active 这个 class；否则不加 -->
   	<view class="navBar">
+		<view class="top"></view>
   		<view class="top-tab">
   			<!-- 定位 -->
   			<view class="position">
@@ -28,7 +29,6 @@
   		  </view>
   		</view>
   	</view>
-  
 
   <!-- 2. 内容区：swiper 负责左右滑，scroll-view 负责内部滚动 -->
   <swiper
@@ -89,20 +89,26 @@ async function onRefresh(idx){
 	right: 0;
 	z-index: 998;
 	width: 100%;
-	height: 100px;
-	background: linear-gradient(180deg, #F2EDE6 0%, #fff 100%);
 	border-bottom: solid 0.1px #D9D9D9;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
+.top{
+	width: 100vw;
+	height: 100rpx;
+	background-color: #FF5853;
+	opacity: 0.8; 
+}
 	
 .tab-bar{
+  margin-top: 20rpx;
   width: 100%;
   height: 88rpx;
   display: flex;
   align-items: center;
+  background-color: white;
   border-bottom: 1rpx solid #eee;
   z-index: 998;
 }
@@ -132,7 +138,7 @@ async function onRefresh(idx){
 /* 内容区 */
 .content-swiper{
   height: 100vh;          // 整屏高
-  padding-top: 100rpx;     // 把固定栏位置让出来
+  padding-top: 200rpx;     // 把固定栏位置让出来
   box-sizing: border-box;
 }
 .scroll-box{
@@ -140,8 +146,9 @@ async function onRefresh(idx){
 }
 
 .top-tab{
+	margin-top: 20rpx;
 	width: 100vw;
-	height: 100px;
+	height: 60rpx;
 	display: flex;
 	justify-content: center;
 	align-items: center;

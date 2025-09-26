@@ -45,79 +45,77 @@
 			</view>
 		 </view>
 	</view>
-  <view class="box">
-     <view v-for="(item, i) in cardList" :key="i" class="card">
-		 <view style="display: flex; justify-content: space-between;align-items: center;">
-			 <UserInfoEnchanced
-			   :avatarUrl="item.userInfo.portrait"
-			   :name="item.userInfo.userName"
-			   description="2天前"
-			   ipPosition="上海"
-			   size="medium"
-			   gender=0
-			   layout="horizontal"
-			   :tags="item.userInfo.tags"
-			 />
-			 <view class="btn-concern">
-				+ 关注
+	  <view class="box">
+		 <view v-for="(item, i) in cardList" :key="i" class="card">
+			 <view style="display: flex; justify-content: space-between;align-items: center;">
+				 <UserInfoEnchanced
+				   :avatarUrl="item.userInfo.portrait"
+				   :name="item.userInfo.userName"
+				   description="2天前"
+				   ipPosition="上海"
+				   size="medium"
+				   gender=0
+				   layout="horizontal"
+				   :tags="item.userInfo.tags"
+				 />
+				 <view class="btn-concern">
+					+ 关注
+				 </view>
 			 </view>
-		 </view>
-		
-		 <view class="card-content">
-			 <!-- 作品封面图 -->
-			 <image class="cover"  :src="item.coverImages[0]" mode="aspectFill">
-			</image>
-			 <!-- 擅长风格 -->
-			 <view class="styles">
-				<text class="styles-title">擅长风格</text>
-				<view v-for="(scard,idx) in item.photoStyles" :key="idx" class="styles-card">
-					<!-- 头图 -->
-					<image class="first-photo" :src="scard.firstPhoto" mode="aspectFill">
-						
-					</image>
-					<view class="styles-summerize">
-						<view class="styles-top">
-							<!-- 风格 -->
-							<view class="styles-top-trait">
-								{{'【'+scard.styleLocation+'】'}}
+			
+			 <view class="card-content">
+				 <!-- 作品封面图 -->
+				 <image class="cover"  :src="item.coverImages[0]" mode="aspectFill">
+				</image>
+				 <!-- 擅长风格 -->
+				 <view class="styles">
+					<text class="styles-title">擅长风格</text>
+					<view v-for="(scard,idx) in item.photoStyles" :key="idx" class="styles-card">
+						<!-- 头图 -->
+						<image class="first-photo" :src="scard.firstPhoto" mode="aspectFill"></image>
+						<view class="styles-summerize">
+							<view class="styles-top">
+								<!-- 风格 -->
+								<view class="styles-top-trait">
+									{{'【'+scard.styleLocation+'】'}}
+								</view>
+								<!-- 价格 -->
+								<view class="styles-top-price">
+									{{'¥'+scard.price+'/h'}}
+								</view>
 							</view>
-							<!-- 价格 -->
-							<view class="styles-top-price">
-								{{'¥'+scard.price+'/h'}}
+							<view class="styles-bottom">
+								<!-- 预约按钮 -->
+								<view class="styles-bottom-btn">
+									预约
+								</view>
+								<!-- 查看作品按钮 -->
+								<view  style="color: #979797; font-size: 0.7rem;">
+									查看作品>
+								</view>
 							</view>
 						</view>
-						<view class="styles-bottom">
-							<!-- 预约按钮 -->
-							<view class="styles-bottom-btn">
-								预约
-							</view>
-							<!-- 查看作品按钮 -->
-							<view  style="color: #979797; font-size: 0.7rem;">
-								查看作品>
-							</view>
+					</view>
+					<!-- 接单范围 -->
+					<view class="range">
+						<image class="range-img" src="../static/time.png" mode="aspectFit"></image>
+						<view class="range-time"> {{item.start}}~{{item.end}} </view>
+					</view>
+					<!-- 时间 -->
+					<view class="range">
+						<image class="range-img" src="../static/search/position.png" mode="aspectFit"></image>
+						<view class="range-time"> 上海之巅附近 </view>
+					</view>
+					<view class="hot-digit">
+						<view class="icon-wrapper">
+							<image class="icon" src="../static/fire.png" mode="aspectFit"></image>
+							<view style="color: #FE1934;">1000</view>
 						</view>
-					</view>
-				</view>
-				<!-- 接单范围 -->
-				<view class="range">
-					<image class="range-img" src="../static/time.png" mode="aspectFit"></image>
-					<view class="range-time"> {{item.start}}~{{item.end}} </view>
-				</view>
-				<!-- 时间 -->
-				<view class="range">
-					<image class="range-img" src="../static/search/position.png" mode="aspectFit"></image>
-					<view class="range-time"> 上海之巅附近 </view>
-				</view>
-				<view class="hot-digit">
-					<view class="icon-wrapper">
-						<image class="icon" src="../static/fire.png" mode="aspectFit"></image>
-						<view style="color: #FE1934;">1000</view>
-					</view>
-					<view style="color:#979797;">查看详情 ></view>
-					</view>
+						<view style="color:#979797;">查看详情 ></view>
+						</view>
+				 </view>
 			 </view>
-		 </view>
-       </view>
+		   </view>
 	   
   </view>
 </template>
@@ -128,6 +126,7 @@ import UserInfoEnchanced from '../component/user_info.vue';
 import * as type from "../api/request";
 import down from "@/static/icons/down.png";
 import up from "@/static/icons/up.png";
+import { EventEmitter } from 'stream';
 
 // 字段定义
 const cardList = reactive<type.PhotoListCard[]>([]);
@@ -193,7 +192,7 @@ const showMorePicker=()=>{
 
 const activeCell = (item: string) => traitPicker.pickedList.includes(item);
 
-const change = (e)=>{
+const change = (e:Event)=>{
 	console.log('change-----')
 	timePicker.range = e
 	timePicker.startDate = e.range.before;
@@ -309,10 +308,15 @@ const getCardList = (page: Number, pageSize: Number)=>{
 getCardList(0,10);
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+.select-items{
+	margin-top: 90rpx;
+	width: 100vw;
+	height: auto;
+}
 
 .box{ 
-	margin-top: 80rpx;
+	margin-top: 150rpx;
 	padding: 20rpx 0; 
 	background-color: #F2EDE6;
 	font-family: 'Cute';
@@ -325,10 +329,11 @@ getCardList(0,10);
   &-content{
 	  display: flex;
 	  margin-top: 10px;
+	  justify-content: space-between;
   }
 }
 .cover{
-	width:50vw;
+	width:45vw;
 	height: 55vw;
 	object-fit: cover;
 	border-radius: 10px;
@@ -336,19 +341,20 @@ getCardList(0,10);
 	
 }
 .styles{
-	width: 35vw;
+	width: 55vw;
 	display: flex;
-	padding: 0 20px;
 	margin-top: -30rpx;
 	flex-direction: column;
+	justify-content: space-between;
 	align-items: center;
 	font-family: 'Cute';
 	font-size: 0.8rem;
 	&-card{
-		width: 43vw;
+		padding: 15rpx 0;
+		width: 50vw;
 		height: 12vw;
 		display: flex;
-		margin-top: 15rpx;
+		margin-top: 20rpx;
 		box-shadow: 0 4px 16px rgba(0,0,0,.2);
 	}
 }
@@ -359,7 +365,10 @@ getCardList(0,10);
 
 // 擅长风格卡片
 .styles-top{
+	width: 40vw;
 	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
 	&-trait{
 		width: 20vw;
 		font-size: 0.75rem;
@@ -373,9 +382,9 @@ getCardList(0,10);
 }
 .styles-bottom{
 	display: flex;
-	margin-top: 6px;
+	margin-top: 20rpx;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	&-btn{
 		width: 14vw;
 		height: 5vw;
